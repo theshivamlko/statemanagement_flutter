@@ -59,13 +59,13 @@ class _MyPage1State extends State<MyPage1> {
                       (StateInheritedState.of(context)?.counter ?? 1) + 1;
                   appState?.counter = appState.counter + 1;
                   print(
-                      "MyPage1 Counter ${appState} ${appState?.counter} ${StateInheritedState.of(context)?.counter} ${StateInheritedState.of(context).hashCode} ");
+                      "MyPage1 Counter $appState ${appState.counter} ${StateInheritedState.of(context)?.counter} ${StateInheritedState.of(context).hashCode} ");
                 },
                 child: Text("Counter")),
             ElevatedButton(
                 onPressed: () {
                   AppState appState = AppState();
-                  print("MyPage1 Btn ${appState.hashCode} ");
+                  //   print("MyPage1 Btn ${appState.hashCode} ");
                   Navigator.push(
                       context,
                       MaterialPageRoute(

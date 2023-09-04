@@ -17,6 +17,11 @@ class _MyPage3State extends State<MyPage3> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text('MyPage3'),
         ),
-        body: Text('${appState?.counter}', style: TextStyle(fontSize: 20)));
+        body: GestureDetector(
+            onTap: (){
+              StateInheritedState.of(context)?.counter++;
+              setState(() {});
+            },
+            child: Text('${appState?.counter}', style: TextStyle(fontSize: 20))));
   }
 }

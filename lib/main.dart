@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'inheritedwidget/launcher.dart';
 
 void main() {
-  runApp(  InheritedWidgetApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const InheritedWidgetApp());
 }
 
