@@ -20,65 +20,65 @@ class _MyPage2State extends State<MyPage2> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      print(
-          "MyPage2 SchedulerBinding ${StateInheritedState.of(context)?.appState.counter} ${StateInheritedState.of(context)?.appState.hashCode}");
-    });
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {});
   }
 
   @override
   Widget build(BuildContext context) {
     print(
-        "MyPage2 build ${StateInheritedState.of(context)?.appState.counter} ${StateInheritedState.of(context)?.appState.hashCode} ${widget.mainCounter} $secondCounter");
-    //  print("MyPage2 build ${appState?.counter} ${appState.hashCode}");
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text('MyPage2'),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              '${StateInheritedState.of(context)?.appState.counter}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Text(
-              '${widget.mainCounter}  $secondCounter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  StateInheritedState.of(context)?.appState.counter++;
+        "MyPage2 build ${StateInheritedState.of(context)?.counter} ${StateInheritedState.of(context)?.hashCode} ${widget.mainCounter} $secondCounter");
 
-                  //   appState?.counter=   appState .counter  +1;
+    return StreamBuilder<dynamic>(
+        stream: StateInheritedState.of(context)?.controller.stream,
+        builder: (context, snapshot) {
+          print("MyPage2 StreamBuilder");
+          return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                title: Text('MyPage2'),
+              ),
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '${StateInheritedState.of(context)?.counter}',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  Text(
+                    '${widget.mainCounter}  $secondCounter',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        StateInheritedState.of(context)?.counter++;
+                        //   StateInheritedState.of(context)?.copy(100, Colors.black12);
 
-                  //    print("MyPage2 Counter ${appState} ${appState?.counter} ${StateInheritedState.of(context)?.appState.counter} ${StateInheritedState.of(context).hashCode}  ");
-                  print(
-                      "MyPage2 Counter ${StateInheritedState.of(context)?.appState.counter} ${StateInheritedState.of(context).hashCode}  ");
+                        //   appState?.counter=   appState .counter  +1;
 
-                  widget.mainCounter++;
-                  secondCounter++;
-                  setState(() {});
-                },
-                child: Text("Counter")),
-            GestureDetector(
-                onTap: () {
-
-                 /* Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => MyPage3()));*/
-                },
-                child: ChildWidget())
-          ],
-        ));
+                        //    print("MyPage2 Counter ${appState} ${appState?.counter} ${StateInheritedState.of(context)?.appState.counter} ${StateInheritedState.of(context).hashCode}  ");
+                        print(
+                            "MyPage2 Counter ${StateInheritedState.of(context)?.counter} ${StateInheritedState.of(context).hashCode}  ");
+                        StateInheritedState.of(context)!.controller.sink.add(true);
+                        widget.mainCounter++;
+                        secondCounter++;
+                        //  setState(() {});
+                      },
+                      child: Text("Counter")),
+                  GestureDetector(
+                      onTap: () {
+                        /* Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => MyPage3()));*/
+                      },
+                      child: ChildWidget())
+                ],
+              ));
+        });
   }
 
   @override
   void didChangeDependencies() {
-
     super.didChangeDependencies();
     print("didChangeDependencies ");
-
   }
 
   @override
@@ -86,7 +86,6 @@ class _MyPage2State extends State<MyPage2> {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
     print("didUpdateWidget ${oldWidget.mainCounter} ");
-
   }
 }
 
@@ -100,14 +99,15 @@ class ChildWidget extends StatefulWidget {
 class _ChildWidgetState extends State<ChildWidget> {
   @override
   Widget build(BuildContext context) {
-    var appState = StateInheritedState.of(context)?.appState;
+    var appState = StateInheritedState.of(context);
     return GestureDetector(
-        onTap: (){
-          StateInheritedState.of(context)?.appState.counter++;
-          setState(() {
-
-          });
+        onTap: () {
+          StateInheritedState.of(context)?.counter++;
+          setState(() {});
         },
-        child: Text('${appState?.counter}',style: TextStyle(fontSize: 20),));
+        child: Text(
+          '${appState?.counter}',
+          style: TextStyle(fontSize: 20),
+        ));
   }
 }

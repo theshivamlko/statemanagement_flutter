@@ -7,9 +7,14 @@ class StateInheritedState extends InheritedWidget {
   StateInheritedState({required this.appState, required super.child});
 
 
-  static StateInheritedState? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<StateInheritedState>();
+  static AppState? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<StateInheritedState>()!.appState;
   }
+
+
+/*  @override
+  bool updateShouldNotify(StateInheritedState oldWidget)=>true;*/
+
 
   @override
   bool updateShouldNotify(StateInheritedState oldWidget) {

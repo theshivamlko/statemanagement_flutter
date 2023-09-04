@@ -31,12 +31,11 @@ class MyPage1 extends StatefulWidget {
 }
 
 class _MyPage1State extends State<MyPage1> {
-   AppState appState=AppState();
-
+  AppState appState = AppState();
 
   @override
   Widget build(BuildContext context) {
-   // var appState=StateInheritedState.of(context);
+    // var appState=StateInheritedState.of(context);
     print("MyPage1 build ${appState?.counter} ${appState.hashCode}");
     return Scaffold(
       appBar: AppBar(
@@ -56,23 +55,25 @@ class _MyPage1State extends State<MyPage1> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  StateInheritedState.of(context)?.appState.counter=    (StateInheritedState.of(context)?.appState.counter??1)+1;
-                  appState?.counter=   appState .counter  + 1;
-                  print("MyPage1 Counter ${appState} ${appState?.counter} ${StateInheritedState.of(context)?.appState.counter} ${StateInheritedState.of(context).hashCode} ");
-
+                  StateInheritedState.of(context)?.counter =
+                      (StateInheritedState.of(context)?.counter ?? 1) + 1;
+                  appState?.counter = appState.counter + 1;
+                  print(
+                      "MyPage1 Counter ${appState} ${appState?.counter} ${StateInheritedState.of(context)?.counter} ${StateInheritedState.of(context).hashCode} ");
                 },
                 child: Text("Counter")),
             ElevatedButton(
                 onPressed: () {
-                  AppState appState=AppState();
+                  AppState appState = AppState();
                   print("MyPage1 Btn ${appState.hashCode} ");
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (ctx) => StateInheritedState(
-                      appState:appState,
-                      child: MyPage2())));
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => StateInheritedState(
+                              appState: appState, child: MyPage2())));
                 },
                 child: Text("MyPage2")),
-            Padding(padding: EdgeInsets.all(20)),
+            const Padding(padding: EdgeInsets.all(20)),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(

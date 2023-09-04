@@ -11,7 +11,7 @@ class MyPage3 extends StatefulWidget {
 class _MyPage3State extends State<MyPage3> {
   @override
   Widget build(BuildContext context) {
-    var appState = StateInheritedState.of(context)?.appState;
+    var appState = StateInheritedState.of(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
