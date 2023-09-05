@@ -7,8 +7,8 @@ import 'inheritedwidget/launcher.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const InheritedWidgetApp());
- // runApp(const ProviderWidgetApp());
+  // runApp(const InheritedWidgetApp());
+ runApp(const ProviderWidgetApp());
 }
 
 

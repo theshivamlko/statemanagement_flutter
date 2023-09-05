@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/providers/MyBlocNotifier.dart';
 
@@ -11,19 +12,18 @@ class MyProviderPage2 extends StatefulWidget {
 }
 
 class _MyProviderPage2State extends State<MyProviderPage2> {
-  MyBlocNotifier myBlocNotifier = MyBlocNotifier();
+  late MyBlocNotifier myBlocNotifier;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
   }
 
   @override
   Widget build(BuildContext context) {
-
+    myBlocNotifier = Provider.of<MyBlocNotifier>(context);
+    print("MyProviderPage2 build  ${myBlocNotifier.appState.counter}");
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +34,6 @@ class _MyProviderPage2State extends State<MyProviderPage2> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
             Text(
               '${myBlocNotifier.appState?.counter}',
               style: Theme.of(context).textTheme.headlineMedium,
@@ -42,10 +41,8 @@ class _MyProviderPage2State extends State<MyProviderPage2> {
             ElevatedButton(
                 onPressed: () {
                   myBlocNotifier.increment();
-                
                 },
                 child: Text("Counter")),
-
           ],
         ),
       ),
