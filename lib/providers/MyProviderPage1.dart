@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/providers/MyBlocNotifier.dart';
 import 'package:statemanagement/providers/MyBlocNotifier2.dart';
+import 'package:statemanagement/providers/MyBlocNotifierWithParam.dart';
 import 'package:statemanagement/providers/MyProviderPage2.dart';
+import 'package:statemanagement/providers/MyProviderPage3.dart';
 
 class MyProviderPage1 extends StatefulWidget {
   MyProviderPage1({super.key});
@@ -103,27 +105,43 @@ class _MyProviderPage1State extends State<MyProviderPage1> {
             ElevatedButton(
                 onPressed: () {
                   //   print("MyPage1 Btn ${appState.hashCode} ");
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx) => ChangeNotifierProxyProvider< MyBlocNotifier,MyBlocNotifier2>(
-                          create: (ctx) => MyBlocNotifier2(),
-                        update: (context, value, previous) {
-                          print("ChangeNotifierProxyProvider1 ${value.appState.counter} ${value.appState.hashCode} ${value.runtimeType} ");
-                          print("ChangeNotifierProxyProvider2 ${previous?.appState.counter} ${previous?.appState.hashCode} ${previous.runtimeType}  ");
-
-                          return previous!;
-                        },
-                        builder: (context, child) {
-                          print("ChangeNotifierProxyProvider3 build");
-                          return MyProviderPage2();
-                        },
-                      )));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) =>
+                              ChangeNotifierProvider<MyBlocNotifier2>(
+                                create: (ctx) => MyBlocNotifier2(),
+                                builder: (context, child) {
+                                  print("ChangeNotifierProxyProvider3 build");
+                                  return MyProviderPage2();
+                                },
+                              )));
                 },
                 child: Text("MyProviderPage2")),
             const Padding(padding: EdgeInsets.all(20)),
             ElevatedButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //     context, MaterialPageRoute(builder: (ctx) => MyPage3()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => MultiProvider(
+                                providers: [
+                                  ChangeNotifierProvider<MyBlocNotifier2>(
+                                    create: (ctx) => MyBlocNotifier2(),
+                                  ),
+                                  ChangeNotifierProxyProvider<MyBlocNotifier2,
+                                          MyBlocNotifierWithParam>(
+                                      create: (ctx) =>
+                                          MyBlocNotifierWithParam(),
+                                      update: (context, value, previous) {
+                                        return MyBlocNotifierWithParam.count(
+                                            value?.appState.counter ?? 0);
+                                      },
+                                      builder: (context, child) {
+                                        return MyProviderPage3();
+                                      }),
+                                ],
+                              )));
                 },
                 child: Text("MyProviderPage3"))
           ],
