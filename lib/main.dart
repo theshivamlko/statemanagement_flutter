@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:statemanagement/AppState.dart';
-import 'package:statemanagement/providers/MyProviderPage1.dart';
-import 'package:statemanagement/providers/provider_launcher.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'inheritedwidget/launcher.dart';
+import 'riverpod/riverpod_launcher.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // runApp(const InheritedWidgetApp());
- runApp(const ProviderWidgetApp());
+ // runApp(const ProviderWidgetApp());
+  runApp(ProviderScope(child:   RiverpodWidgetApp()));
+
 }
 
 

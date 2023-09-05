@@ -1,9 +1,8 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:statemanagement/CommonState.dart';
 
-@immutable
+
 class AppState implements CommonState {
   Color? background;
   int counter = 0;
@@ -11,6 +10,7 @@ class AppState implements CommonState {
     this.counter = counter;
     this.background = background;
   }
+  AppState.count(this.counter);
 
   @override
   void dispose() {
