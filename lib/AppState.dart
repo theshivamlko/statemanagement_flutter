@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:statemanagement/CommonState.dart';
 
-class AppState{
+class AppState implements CommonState{
   Color? background;
   int  counter=0;
   // StreamController controller=StreamController.broadcast();

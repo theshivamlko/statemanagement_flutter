@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:statemanagement/ParentState.dart';
+import 'package:statemanagement/StudentState.dart';
 import 'package:statemanagement/inheritedwidget/MyPage3.dart';
-import 'package:statemanagement/inheritedwidget/StateInheritedState.dart';
+import 'package:statemanagement/inheritedwidget/AppStateInherited.dart';
+import 'package:statemanagement/inheritedwidget/ParentStateInherited.dart';
+import 'package:statemanagement/inheritedwidget/StudentStateInherited.dart';
 
 class MyPage2 extends StatefulWidget {
   int mainCounter = 2;
@@ -13,19 +17,15 @@ class MyPage2 extends StatefulWidget {
 }
 
 class _MyPage2State extends State<MyPage2> {
-  int secondCounter = 5;
+  StudentState studentState = StudentState();
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {});
   }
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "MyPage2 build ${StateInheritedState.of(context)?.counter} ${StateInheritedState.of(context)?.hashCode} ${widget.mainCounter} $secondCounter");
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -35,7 +35,7 @@ class _MyPage2State extends State<MyPage2> {
           items: [
             BottomNavigationBarItem(
                 icon: Icon(Icons.add),
-                label: '${StateInheritedState.of(context)?.counter} A'),
+                label: '${AppStateInherited.of(context)?.counter} A'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.access_alarm), label: 'BB'),
             BottomNavigationBarItem(icon: Icon(Icons.accessible), label: 'CC'),
@@ -45,26 +45,25 @@ class _MyPage2State extends State<MyPage2> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '${StateInheritedState.of(context)?.counter}',
+              'App State ${AppStateInherited.of(context)?.counter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text(
-              '${widget.mainCounter}  $secondCounter',
+              'Parent State ${ParentStateInherited.of(context)?.salary}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              'Student State ${StudentStateInherited.of(context)?.roll}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(
                 onPressed: () {
-                  StateInheritedState.of(context)?.counter++;
-                  // int n=  StateInheritedState.of(context)?.counter??0 ;
-                  // StateInheritedState.of(context)?.copy(++n, Colors.black12);
-
-                  //   appState?.counter=   appState .counter  +1;
-
-                  //    print("MyPage2 Counter ${appState} ${appState?.counter} ${StateInheritedState.of(context)?.appState.counter} ${StateInheritedState.of(context).hashCode}  ");
+                  AppStateInherited.of(context)?.counter++;
+                  ParentStateInherited.of(context)!.salary =
+                      ParentStateInherited.of(context)!.salary * 1.2;
                   print(
-                      "MyPage2 Counter ${StateInheritedState.of(context)?.counter} ${StateInheritedState.of(context).hashCode}  ");
-                  //     widget.mainCounter++;
-                  //    secondCounter++;
+                      "MyPage2 Counter ${AppStateInherited.of(context)?.counter} ${AppStateInherited.of(context).hashCode}  ");
+
                   setState(() {});
                 },
                 child: Text("Counter")),
@@ -73,7 +72,8 @@ class _MyPage2State extends State<MyPage2> {
                   /* Navigator.push(
                           context, MaterialPageRoute(builder: (_) => MyPage3()));*/
                 },
-                child: ChildWidget())
+                child: StudentStateInherited(
+                    state: studentState, child: ChildWidget()))
           ],
         ));
   }
@@ -82,8 +82,7 @@ class _MyPage2State extends State<MyPage2> {
   void didChangeDependencies() {
     print("didChangeDependencies ");
     super.didChangeDependencies();
-    var data = StateInheritedState.of(context);
-    secondCounter = data?.counter ?? secondCounter;
+    var data = AppStateInherited.of(context);
   }
 
   @override
@@ -95,6 +94,7 @@ class _MyPage2State extends State<MyPage2> {
 }
 
 class ChildWidget extends StatefulWidget {
+
   ChildWidget({super.key});
 
   @override
@@ -104,26 +104,32 @@ class ChildWidget extends StatefulWidget {
 class _ChildWidgetState extends State<ChildWidget> {
   @override
   Widget build(BuildContext context) {
-    var appState = StateInheritedState.of(context);
+    var appState = AppStateInherited.of(context);
+    var parentState = ParentStateInherited .of(context);
+    var studentState = StudentStateInherited .of(context);
     return Column(
       children: [
         GestureDetector(
             onTap: () {
-              StateInheritedState.of(context)?.counter++;
+              studentState?.copy(studentState .roll + 1 );
+              print("ChildWidget ${studentState?.roll} ${studentState?.hashCode}");
               setState(() {});
+
             },
             child: Text(
-              '${appState?.counter}',
+              'App State ${appState?.counter} \n'
+                  'Parent State ${parentState?.salary} \n'
+                  'Student State ${studentState?.roll} \n',
               style: TextStyle(fontSize: 20),
             )),
         GestureDetector(
             onTap: () {
+
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => StateInheritedState(
-                          appState: StateInheritedState.of(context)!,
-                          child: MyPage3())));
+                  context, MaterialPageRoute(builder: (ctx) => MyPage3()));
+
+              // Navigator.push(
+              //     context, MaterialPageRoute(builder: (_) => MyPage3()));
             },
             child: Text(
               'Page3',
@@ -131,5 +137,18 @@ class _ChildWidgetState extends State<ChildWidget> {
             ))
       ],
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    print("ChildWidget didChangeDependencies ");
+    super.didChangeDependencies();
+    var data = AppStateInherited.of(context);
+  }
+
+  @override
+  void didUpdateWidget(covariant ChildWidget oldWidget) {
+    print("ChildWidget didUpdateWidget ${oldWidget} ");
+    super.didUpdateWidget(oldWidget);
   }
 }
