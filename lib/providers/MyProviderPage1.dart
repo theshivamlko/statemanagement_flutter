@@ -104,7 +104,19 @@ class _MyProviderPage1State extends State<MyProviderPage1> {
                 onPressed: () {
                   //   print("MyPage1 Btn ${appState.hashCode} ");
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx) => MyProviderPage2()));
+                      MaterialPageRoute(builder: (ctx) => ChangeNotifierProxyProvider< MyBlocNotifier,MyBlocNotifier2>(
+                          create: (ctx) => MyBlocNotifier2(),
+                        update: (context, value, previous) {
+                          print("ChangeNotifierProxyProvider1 ${value.appState.counter} ${value.appState.hashCode} ${value.runtimeType} ");
+                          print("ChangeNotifierProxyProvider2 ${previous?.appState.counter} ${previous?.appState.hashCode} ${previous.runtimeType}  ");
+
+                          return previous!;
+                        },
+                        builder: (context, child) {
+                          print("ChangeNotifierProxyProvider3 build");
+                          return MyProviderPage2();
+                        },
+                      )));
                 },
                 child: Text("MyProviderPage2")),
             const Padding(padding: EdgeInsets.all(20)),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/providers/MyBlocNotifier.dart';
+import 'package:statemanagement/providers/MyBlocNotifier2.dart';
 
 class MyProviderPage2 extends StatefulWidget {
   const MyProviderPage2({super.key});
@@ -13,6 +14,7 @@ class MyProviderPage2 extends StatefulWidget {
 
 class _MyProviderPage2State extends State<MyProviderPage2> {
   late MyBlocNotifier myBlocNotifier;
+  late MyBlocNotifier2 myBlocNotifier2;
 
   @override
   void initState() {
@@ -22,6 +24,8 @@ class _MyProviderPage2State extends State<MyProviderPage2> {
   @override
   Widget build(BuildContext context) {
     myBlocNotifier = Provider.of<MyBlocNotifier>(context);
+    myBlocNotifier2 = Provider.of<MyBlocNotifier2>(context);
+
     print("MyProviderPage2 build  ${myBlocNotifier.appState.counter}");
 
     return Scaffold(
@@ -33,20 +37,29 @@ class _MyProviderPage2State extends State<MyProviderPage2> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              '${myBlocNotifier.appState?.counter}',
-              style: Theme.of(context).textTheme.headlineMedium,
+            GestureDetector(
+              onTap: () {
+                myBlocNotifier.increment();
+              },
+              child: Text(
+                '${myBlocNotifier.appState?.counter}',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
             ),
             ElevatedButton(
                 onPressed: () {
-                  myBlocNotifier.increment();
                 },
                 child: Text("Counter")),
-
             Padding(padding: EdgeInsets.all(20)),
-            Text(
-              '${myBlocNotifier.appState?.counter}',
-              style: Theme.of(context).textTheme.headlineMedium,
+            GestureDetector(
+              onTap: () {
+                myBlocNotifier2.increment();
+
+              },
+              child: Text(
+                '${myBlocNotifier2.appState?.counter}',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
             ),
           ],
         ),
