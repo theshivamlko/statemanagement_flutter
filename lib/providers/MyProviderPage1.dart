@@ -8,6 +8,7 @@ import 'package:statemanagement/providers/MyBlocNotifier2.dart';
 import 'package:statemanagement/providers/MyBlocNotifierWithParam.dart';
 import 'package:statemanagement/providers/MyProviderPage2.dart';
 import 'package:statemanagement/providers/MyProviderPage3.dart';
+import 'package:statemanagement/providers/MyProviderPage4.dart';
 
 class MyProviderPage1 extends StatefulWidget {
   MyProviderPage1({super.key});
@@ -143,7 +144,18 @@ class _MyProviderPage1State extends State<MyProviderPage1> {
                                 ],
                               )));
                 },
-                child: Text("MyProviderPage3"))
+                child: Text("MyProviderPage3")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (ctx) => ChangeNotifierProvider<MyBlocNotifier2>(
+                          create: (ctx) => MyBlocNotifier2(),
+                          builder: (context, child) {
+                          return MyProviderPage4();
+                        }
+                      )));
+                },
+                child: Text("MyProviderPage4"))
           ],
         ),
       ),
