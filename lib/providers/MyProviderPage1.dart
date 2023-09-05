@@ -8,9 +8,7 @@ import 'package:statemanagement/providers/MyBlocNotifier2.dart';
 import 'package:statemanagement/providers/MyProviderPage2.dart';
 
 class MyProviderPage1 extends StatefulWidget {
-  MyProviderPage1({
-    super.key,
-  });
+  MyProviderPage1({super.key});
 
   @override
   State<MyProviderPage1> createState() => _MyProviderPage1State();
@@ -18,6 +16,8 @@ class MyProviderPage1 extends StatefulWidget {
 
 class _MyProviderPage1State extends State<MyProviderPage1> {
   //MyBlocNotifier myBlocNotifier = MyBlocNotifier();
+  late MyBlocNotifier2 myBlocNotifier2;
+  late MyBlocNotifier myBlocNotifier;
 
   @override
   void initState() {
@@ -32,9 +32,9 @@ class _MyProviderPage1State extends State<MyProviderPage1> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    MyBlocNotifier2 myBlocNotifier2 = Provider.of<MyBlocNotifier2>(context);
-    MyBlocNotifier myBlocNotifier = Provider.of<MyBlocNotifier>(context);
+  Widget build(BuildContext context2) {
+    myBlocNotifier2 = Provider.of<MyBlocNotifier2>(context2);
+    myBlocNotifier = Provider.of<MyBlocNotifier>(context2, listen: false);
     print("MyProviderPage1 build  ${myBlocNotifier2.appState.counter}");
     return Scaffold(
       appBar: AppBar(
@@ -59,6 +59,47 @@ class _MyProviderPage1State extends State<MyProviderPage1> {
                   myBlocNotifier2.increment();
                 },
                 child: Text("Counter")),
+            Text(
+              '============',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Consumer<MyBlocNotifier>(builder: (context, bloc, child) {
+              return GestureDetector(
+                onTap: () {
+                  bloc.increment();
+                  //   myBlocNotifier2.increment();
+                },
+                child: Text(
+                  'BLOC1 ${myBlocNotifier.appState?.counter}\n'
+                  'BLOC2 ${myBlocNotifier2.appState?.counter} \n'
+                  'Consumer BLOC1 ${bloc.appState?.counter} \n',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              );
+            }),
+            Text(
+              '============',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Consumer<MyBlocNotifier2>(builder: (context, bloc, child) {
+              // listen not works here
+              var bloc2 = Provider.of<MyBlocNotifier2>(context2, listen: false);
+              return GestureDetector(
+                onTap: () {
+                  bloc.increment();
+                  //   myBlocNotifier2.increment();
+                },
+                child: Text(
+                  'BLOC2 ${myBlocNotifier2.appState?.counter} \n'
+                  'Consumer BLOC2 ${bloc.appState?.counter} \n',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              );
+            }),
+            Text(
+              '============',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
             ElevatedButton(
                 onPressed: () {
                   //   print("MyPage1 Btn ${appState.hashCode} ");
@@ -77,5 +118,25 @@ class _MyProviderPage1State extends State<MyProviderPage1> {
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("didChangeDependencies");
+  }
+
+  @override
+  void didUpdateWidget(covariant MyProviderPage1 oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateWidget");
+  }
+
+  @override
+  void dispose() {
+    myBlocNotifier?.dispose();
+    myBlocNotifier2?.dispose();
+    super.dispose();
   }
 }

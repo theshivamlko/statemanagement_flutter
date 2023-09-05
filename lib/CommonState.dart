@@ -1,5 +1,6 @@
 
 
-class CommonState{
+abstract class CommonState{
 
+  void dispose();
 }

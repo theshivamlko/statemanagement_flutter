@@ -12,4 +12,9 @@ class ParentState implements CommonState {
     this.salary = salary;
 
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+  }
 }

@@ -16,7 +16,6 @@ class _MyProviderPage2State extends State<MyProviderPage2> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -43,6 +42,12 @@ class _MyProviderPage2State extends State<MyProviderPage2> {
                   myBlocNotifier.increment();
                 },
                 child: Text("Counter")),
+
+            Padding(padding: EdgeInsets.all(20)),
+            Text(
+              '${myBlocNotifier.appState?.counter}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
           ],
         ),
       ),
