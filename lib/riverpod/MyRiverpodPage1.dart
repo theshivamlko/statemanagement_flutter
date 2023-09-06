@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/riverpod/myproviders.dart';
 
+import 'MyRiverpodPage2.dart';
 import 'myproviders.dart';
 
 class MyRiverpodPage1 extends StatelessWidget {
@@ -25,40 +26,29 @@ class MyRiverpodPage1 extends StatelessWidget {
               var prd = ref.watch(provider1);
               return Column(
                 children: [
-                  Text(
-                    ' Riverpod1 ${ref.read(provider1).counter} ',
-                    style: mytextStyle2,
+                  GestureDetector(
+                    onTap: () {
+                      ref.read(provider1).counter++;
+                    },
+                    child: Text(
+                      ' Provider1 ${ref.read(provider1).counter} ',
+                      style: mytextStyle2,
+                    ),
                   ),
-                  ElevatedButton(
-                      onPressed: () {
-                        ref.read(provider1);
-                        print(
-                            "MyRiverpodPage1 ${ref.read(provider1).hashCode}");
-                      },
-                      child: Text("Counter")),
                 ],
               );
             }),
+            ChildWidget(),
+            ChildWidget2(),
             Text(
               '============',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            GestureDetector(
-              onTap: () {
-                //  bloc.increment();
-              },
-              child: Text(
-                ' ',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
             ElevatedButton(
                 onPressed: () {
                   //   print("MyPage1 Btn ${appState.hashCode} ");
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (ctx) =>MyProviderPage2()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (ctx) => MyRiverpodPage2()));
                 },
                 child: Text("MyProviderPage2")),
             const Padding(padding: EdgeInsets.all(20)),
@@ -78,8 +68,6 @@ class MyRiverpodPage1 extends StatelessWidget {
                   //         builder: (ctx) =>MyProviderPage4()));
                 },
                 child: Text("MyProviderPage4")),
-            ChildWidget(),
-            ChildWidget2()
           ],
         ),
       ),
@@ -97,7 +85,9 @@ class ChildWidget extends ConsumerWidget {
         GestureDetector(
             onTap: () {
               prod.counter++;
-              ref.read(stateprovider1.notifier).update((s) => AppState.count(prod.counter));
+              ref
+                  .read(stateprovider1.notifier)
+                  .update((s) => AppState.count(prod.counter));
 
               print(
                   "${ref.read(stateprovider1.notifier).state.counter} ${ref.read(stateprovider1.notifier).state.hashCode}");
@@ -121,7 +111,6 @@ class ChildWidget2 extends ConsumerStatefulWidget {
 class _ChildWidget2State extends ConsumerState<ChildWidget2> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
