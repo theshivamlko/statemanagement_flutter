@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:statemanagement/AppState.dart';
+import 'package:statemanagement/riverpod/myproviders.dart';
 
 import 'myproviders.dart';
 
@@ -18,20 +19,21 @@ class MyRiverpodPage1 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Riverpod',
-            ),
             Consumer(builder: (context, ref, child) {
               print("MyRiverpodPage1 Consumer ${ref}");
+
+              var prd = ref.watch(provider1);
               return Column(
                 children: [
                   Text(
                     ' Riverpod1 ${ref.read(provider1).counter} ',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: mytextStyle2,
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        ref.watch(provider1).counter++;
+                        ref.read(provider1);
+                        print(
+                            "MyRiverpodPage1 ${ref.read(provider1).hashCode}");
                       },
                       child: Text("Counter")),
                 ],
@@ -88,15 +90,21 @@ class MyRiverpodPage1 extends StatelessWidget {
 class ChildWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var prod = ref.watch(stateprovider1);
+    print("ChildWidget build ${prod.hashCode}");
     return Column(
       children: [
         GestureDetector(
             onTap: () {
-              ref.read(provider2).counter++;
+              prod.counter++;
+              ref.read(stateprovider1.notifier).update((s) => AppState.count(prod.counter));
+
+              print(
+                  "${ref.read(stateprovider1.notifier).state.counter} ${ref.read(stateprovider1.notifier).state.hashCode}");
             },
             child: Text(
-              'ChildWidget  ${ref.read(provider2).counter} \n',
-              style: TextStyle(fontSize: 20),
+              'StateProvider ConsumerWidget  \n${ref.read(stateprovider1).counter} \n',
+              style: mytextStyle2,
             )),
       ],
     );
@@ -115,21 +123,26 @@ class _ChildWidget2State extends ConsumerState<ChildWidget2> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
+    var p1 = ref.read(stateprovider1);
+    print("ChildWidget2 build ${p1.hashCode}");
     return Column(
       children: [
-        GestureDetector(
+        Consumer(builder: (context, ref, child) {
+          var p2 = ref.watch(stateprovider1);
+          return GestureDetector(
             onTap: () {
-              ref.read(provider2).counter++;
+              ref.read(stateprovider1.notifier).state.counter++;
             },
             child: Text(
-              'ChildWidget2  ${ref.read(provider2).counter} \n',
-              style: TextStyle(fontSize: 20),
-            )),
+              'StateProvider ConsumerStatefulWidget  \n${ref.read(stateprovider1).counter} \n',
+              style: mytextStyle2,
+            ),
+          );
+        }),
       ],
     );
   }
