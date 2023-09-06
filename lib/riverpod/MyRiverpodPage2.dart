@@ -75,7 +75,7 @@ class _MyRiverpodPage2State extends ConsumerState<MyRiverpodPage2> {
                 final timeFormatted = DateFormat.Hms().format(currentTime);
                 return GestureDetector(
                   onTap: () {
-                    //   ref.watch(clockProvider);
+                  //  ref.read(clockProvider.notifier).changeTime();
                     ref.read(clockProvider.notifier).stream.listen((event) {
                       print("MyProviderPage2 stream $event ");
                     });
