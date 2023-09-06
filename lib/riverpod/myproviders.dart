@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/riverpod/Clock.dart';
 
+import '../providers/MyBlocNotifier.dart';
+
 final provider1 = Provider<AppState>((ref) {
   print("  Provider ${ref.hashCode} ");
   return AppState.count(10);
@@ -34,6 +36,23 @@ final futureProvider = FutureProvider.autoDispose<AppState>((ref) {
   });
 });
 
+
+final notifierProvider = ChangeNotifierProvider<MyBlocNotifier>((ref) {
+  return MyBlocNotifier();
+});
+
+
+
+final streamProvider = StreamProvider.autoDispose<AppState>((ref) {
+  Stream<AppState> stream() async* {
+    for (int i=1;i<=10;i++){
+     await Future.delayed(Duration(seconds: 1));
+      yield AppState.count(i);
+
+    }
+  }
+  return stream();
+});
 
 
 TextStyle mytextStyle1=TextStyle(fontSize: 16);

@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
- import 'package:statemanagement/AppState.dart';
+import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/riverpod/myproviders.dart';
 
 import 'MyRiverpodPage2.dart';
+import 'MyRiverpodPage3.dart';
 import 'myproviders.dart';
 
-class MyRiverpodPage1 extends StatelessWidget {
+class MyRiverpodPage1 extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     print("MyRiverpodPage1 build  ");
 
     return Scaffold(
@@ -47,30 +48,27 @@ class MyRiverpodPage1 extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Consumer(builder: (context, ref, child) {
-
               return ElevatedButton(
-                    onPressed: ()async {
-                      //   print("MyPage1 Btn ${appState.hashCode} ");
-                    await  Navigator.push(context,
-                          MaterialPageRoute(builder: (ctx) => MyRiverpodPage2()));
+                  onPressed: () async {
+                    //   print("MyPage1 Btn ${appState.hashCode} ");
+                    await Navigator.push(context,
+                        MaterialPageRoute(builder: (ctx) => MyRiverpodPage2()));
 
                     Timer(Duration(seconds: 5), () {
-                    //  MyRiverpodPage2 value still exists
-                      print("MyProviderPage1 StateNotifierProvider Consumer ${ref.read(clockProvider)} ");
+                      //  MyRiverpodPage2 value still exists
+                      print(
+                          "MyProviderPage1 StateNotifierProvider Consumer ${ref.read(clockProvider)} ");
                     });
-
-
-                    },
-                    child: Text("MyProviderPage2"));
-              }
-            ),
+                  },
+                  child: Text("MyProviderPage2"));
+            }),
             const Padding(padding: EdgeInsets.all(20)),
             ElevatedButton(
-                onPressed: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (ctx) =>  MyProviderPage3()));
+                onPressed: () async {
+                  await Navigator.push(context,
+                      MaterialPageRoute(builder: (ctx) => MyRiverpodPage3()));
+                  print(
+                      "MyProviderPage1 StreamProvider Consumer ${ref.read(streamProvider).value?.counter} ");
                 },
                 child: Text("MyProviderPage3")),
             ElevatedButton(

@@ -16,6 +16,8 @@ class AppState implements CommonState {
 
   increment() {
     counter++;
+
+
   }
 
   @override
