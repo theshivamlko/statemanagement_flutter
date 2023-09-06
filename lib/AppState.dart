@@ -10,6 +10,7 @@ class AppState implements CommonState {
     this.counter = counter;
     this.background = background;
   }
+  AppState();
   AppState.count(this.counter);
 
   @override

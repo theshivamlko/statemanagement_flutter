@@ -19,7 +19,7 @@ class ProviderWidgetApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: ChangeNotifierProvider<MyBlocNotifier2>(
+            home: Provider<MyBlocNotifier2>(
                 create: (ctx) => MyBlocNotifier2(),
                 builder: (context, child) {
                   return MyProviderPage1();

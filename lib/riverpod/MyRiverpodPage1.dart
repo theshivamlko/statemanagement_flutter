@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'myproviders.dart';
@@ -30,7 +31,7 @@ class MyRiverpodPage1 extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        ref.read(provider1).counter++;
+                        ref.watch(provider1).counter++;
                       },
                       child: Text("Counter")),
                 ],
@@ -75,7 +76,8 @@ class MyRiverpodPage1 extends StatelessWidget {
                   //         builder: (ctx) =>MyProviderPage4()));
                 },
                 child: Text("MyProviderPage4")),
-            ChildWidget()
+            ChildWidget(),
+            ChildWidget2()
           ],
         ),
       ),
@@ -96,15 +98,38 @@ class ChildWidget extends ConsumerWidget {
               'ChildWidget  ${ref.read(provider2).counter} \n',
               style: TextStyle(fontSize: 20),
             )),
+      ],
+    );
+  }
+}
+
+class ChildWidget2 extends ConsumerStatefulWidget {
+  const ChildWidget2({super.key});
+
+  @override
+  ConsumerState<ChildWidget2> createState() => _ChildWidget2State();
+}
+
+class _ChildWidget2State extends ConsumerState<ChildWidget2> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
         GestureDetector(
             onTap: () {
-              // Navigator.push(
-              //     context, MaterialPageRoute(builder: (_) => MyPage3()));
+              ref.read(provider2).counter++;
             },
             child: Text(
-              'Page3',
+              'ChildWidget2  ${ref.read(provider2).counter} \n',
               style: TextStyle(fontSize: 20),
-            ))
+            )),
       ],
     );
   }
