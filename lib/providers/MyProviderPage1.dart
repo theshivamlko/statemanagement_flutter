@@ -37,7 +37,7 @@ class _MyProviderPage1State extends State<MyProviderPage1> {
   @override
   Widget build(BuildContext context2) {
     myBlocNotifier2 = Provider.of<MyBlocNotifier2>(context2);
-    myBlocNotifier = Provider.of<MyBlocNotifier>(context2, listen: false);
+    myBlocNotifier = Provider.of<MyBlocNotifier>(context2  );
     print("MyProviderPage1 build  ${myBlocNotifier2.appState.counter}");
     return Scaffold(
       appBar: AppBar(
@@ -58,8 +58,8 @@ class _MyProviderPage1State extends State<MyProviderPage1> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  myBlocNotifier.increment();
-                  myBlocNotifier2.increment();
+              //  myBlocNotifier.increment();
+               myBlocNotifier2.increment();
                 },
                 child: Text("Counter")),
             Text(
