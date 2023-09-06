@@ -116,22 +116,19 @@ class _ChildWidget2State extends ConsumerState<ChildWidget2> {
 
   @override
   Widget build(BuildContext context) {
-    var p1 = ref.read(stateprovider1);
+    var p1 = ref.watch(stateprovider1);
     print("ChildWidget2 build ${p1.hashCode}");
     return Column(
       children: [
-        Consumer(builder: (context, ref, child) {
-          var p2 = ref.watch(stateprovider1);
-          return GestureDetector(
-            onTap: () {
-              ref.read(stateprovider1.notifier).state.counter++;
-            },
-            child: Text(
-              'StateProvider ConsumerStatefulWidget  \n${ref.read(stateprovider1).counter} \n',
-              style: mytextStyle2,
-            ),
-          );
-        }),
+        GestureDetector(
+          onTap: () {
+            ref.read(stateprovider1.notifier).state.counter++;
+          },
+          child: Text(
+            'StateProvider ConsumerStatefulWidget  \n${ref.read(stateprovider1).counter} \n',
+            style: mytextStyle2,
+          ),
+        ),
       ],
     );
   }
