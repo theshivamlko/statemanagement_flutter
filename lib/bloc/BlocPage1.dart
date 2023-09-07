@@ -2,15 +2,22 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/bloc/CounterCubit.dart';
 
 import 'BlocPage2.dart';
 import 'CounterCubit2.dart';
+import 'GlobalCounterCubit.dart';
+import 'MyBlocObserver.dart';
 
 class BlocPage1 extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
+    init();
     print("BlocPage1 build  ");
     return Scaffold(
       appBar: AppBar(
@@ -73,9 +80,11 @@ class BlocPage1 extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   BlocProvider.of<CounterCubit>(context).increment();
+                  BlocProvider.of<GlobalCounterCubit>(context).increment();
                 },
                 child: Text(
-                  'BlocConsumer CounterCubit ${BlocProvider.of<CounterCubit>(context).state.counter} ',
+                  'BlocConsumer CounterCubit ${BlocProvider.of<CounterCubit>(context).state.counter} \n'
+                      ' GlobalCounterCubit ${BlocProvider.of<GlobalCounterCubit>(context).state.counter} ',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               );
@@ -89,5 +98,12 @@ class BlocPage1 extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+   void init() async {
+
+
+
   }
 }

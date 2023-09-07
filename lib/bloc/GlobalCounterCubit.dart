@@ -1,14 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statemanagement/AppState.dart';
 
-class CounterCubit2 extends Cubit<AppState> {
-  CounterCubit2() : super(AppState());
+class GlobalCounterCubit extends Cubit<AppState> {
+  GlobalCounterCubit() : super(AppState());
 
   void increment() {
     emit(AppState.count(state.counter + 1));
-   }
-  void increment2() {
-    emit(AppState.count(state.counter2 + 1));
+
    }
 
   @override

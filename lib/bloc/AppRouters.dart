@@ -26,12 +26,10 @@ class AppRouters {
                   ],
                   child: BlocPage2(),
                 ));
-
       default:
         return null;
     }
   }
-
   void dispose(){
     counterCubit.close();
     counterCubit2.close();
