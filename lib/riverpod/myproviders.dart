@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:statemanagement/AppState.dart';
@@ -37,6 +39,9 @@ final changenotifierProvider = ChangeNotifierProvider<MyBlocNotifier>((ref) {
 });
 
 final streamProvider = StreamProvider.autoDispose<AppState>((ref) {
+  ref.keepAlive();
+
+
   Stream<AppState> stream() async* {
     for (int i = 1; i <= 10; i++) {
       await Future.delayed(Duration(milliseconds: 200));

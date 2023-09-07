@@ -4,7 +4,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../AppState.dart';
+import 'CustomNotifier.dart';
 import 'myproviders.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+part 'MyRiverpodPage3.g.dart';
+
+
+/*
+final stateprovider2 = StateProvider<AppState>((ref) {
+  print("  StateProvider ${ref.hashCode} ");
+  return AppState.count(00);
+});
+*/
+// Generating above with generator
+@Riverpod(keepAlive: false)
+AppState myProviderGenerated(MyProviderGeneratedRef ref){
+  return AppState.count(-123);
+}
+
+
+
 
 class MyRiverpodPage3 extends ConsumerWidget {
   const MyRiverpodPage3({super.key});
@@ -59,7 +78,10 @@ class MyRiverpodPage3 extends ConsumerWidget {
             }),
             Padding(padding: EdgeInsets.all(20)),
             ChildWidget(),
-            ChildWidget2()
+            ChildWidget2(),
+            ChildWidget3(),
+            ChildWidget4(),
+            ChildWidget5()
           ],
         ),
       ),
@@ -97,6 +119,58 @@ class ChildWidget2 extends ConsumerWidget {
         },
         child: Text(
           'NotifierProvider param ConsumerWidget  \n ${prod.counter} ',
+          style: mytextStyle2,
+        ));
+  }
+}
+
+class ChildWidget3 extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var prod = ref.watch(notifierProvider.select((value) => value.counter) );
+    print("ChildWidget build ${prod.hashCode}");
+    return GestureDetector(
+        onTap: () {
+      //   ref.read(notifierProvider.notifier).increment();
+      //   ref.read(notifierProvider.notifier).increment2();
+         // ref.read(notifierProvider).counter2++;
+        },
+        child: Text(
+          'NotifierProvider   SELECT  \n ${ref.read(notifierProvider).counter}${ref.read(notifierProvider).counter2} ',
+          style: mytextStyle2,
+        ));
+  }
+}
+
+class ChildWidget4 extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var prod = ref.watch(myProviderGeneratedProvider );
+    print("ChildWidget build ${prod.hashCode}");
+    return GestureDetector(
+        onTap: () {
+          ref.read(myProviderGeneratedProvider).increment();
+          // ref.read(notifierProvider).counter2++;
+        },
+        child: Text(
+          'GENERATED  \n ${ref.read(myProviderGeneratedProvider).counter} ${ref.read(myProviderGeneratedProvider).counter2} ',
+          style: mytextStyle2,
+        ));
+  }
+}
+
+class ChildWidget5 extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var prod = ref.watch(customNotifierProvider );
+    print("ChildWidget5 build ${prod.hashCode}");
+    return GestureDetector(
+        onTap: () {
+          ref.read(customNotifierProvider.notifier).increment();
+          // ref.read(notifierProvider).counter2++;
+        },
+        child: Text(
+          'GENERATED  \n ${ref.read(customNotifierProvider).counter}  ',
           style: mytextStyle2,
         ));
   }

@@ -3,6 +3,7 @@ import 'package:statemanagement/CommonState.dart';
 
 class AppState implements CommonState {
   int counter = 0;
+  int counter2 = 0;
 
   AppState.count(this.counter);
 
@@ -13,10 +14,16 @@ class AppState implements CommonState {
     appState.counter = counter!;
     return appState;
   }
+  AppState copy2({int? counter2}) {
+    AppState appState = AppState();
+    appState.counter2 = counter2!;
+    return appState;
+  }
 
   increment() {
     counter++;
   }
+
 
   @override
   void dispose() {
