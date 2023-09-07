@@ -39,13 +39,13 @@ final changenotifierProvider = ChangeNotifierProvider<MyBlocNotifier>((ref) {
 final streamProvider = StreamProvider.autoDispose<AppState>((ref) {
   Stream<AppState> stream() async* {
     for (int i = 1; i <= 10; i++) {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(milliseconds: 200));
       yield AppState.count(i);
     }
   }
-
   return stream();
 });
+
 
 final notifierProvider = NotifierProvider<Counter, AppState>(() {
   return Counter();

@@ -13,6 +13,8 @@ class MyRiverpodPage3 extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     print("MyRiverpodPage3 build ");
 
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -27,6 +29,9 @@ class MyRiverpodPage3 extends ConsumerWidget {
               return GestureDetector(
                 onTap: () {
                   ref.read(changenotifierProvider).increment();
+                  if(ref.read(changenotifierProvider).appState.counter==5){
+                    ref.invalidate(changenotifierProvider);
+                  }
                 },
                 child: Text(
                   'ChangeNotifier Consumer ${ref.read(changenotifierProvider).appState.counter}',
@@ -37,11 +42,18 @@ class MyRiverpodPage3 extends ConsumerWidget {
             Padding(padding: EdgeInsets.all(20)),
             Consumer(builder: (context, ref, child) {
               AsyncValue v = ref.watch(streamProvider);
+
               return v.when(
-                  data: (d) => Text(
-                        'StreamProvider Consumer ${ref.read(streamProvider).value?.counter}',
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
+                  data: (d) => GestureDetector(
+                    onTap: (){
+                      ref.refresh(streamProvider);
+
+                    },
+                    child: Text(
+                          'StreamProvider Consumer ${ref.read(streamProvider).value?.counter}',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                  ),
                   error: (ctx, error) => Text(error.toString()),
                   loading: () => CircularProgressIndicator());
             }),

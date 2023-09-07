@@ -87,9 +87,16 @@ class MyRiverpodPage1 extends ConsumerWidget {
 }
 
 class ChildWidget extends ConsumerWidget {
+
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var prod = ref.watch(stateprovider1);
+    ref.listen(stateprovider1, (previous, next) {
+      print("listen ${previous?.counter}  ${next?.counter} ");
+    },onError: (error, stackTrace) {
+      print("onError ${error}    ");
+    },);
     print("ChildWidget build ${prod.hashCode}");
     return GestureDetector(
         onTap: () {
@@ -97,6 +104,7 @@ class ChildWidget extends ConsumerWidget {
           ref
               .read(stateprovider1.notifier)
               .update((s) => AppState.count(prod.counter));
+
 
           print(
               "${ref.read(stateprovider1.notifier).state.counter} ${ref.read(stateprovider1.notifier).state.hashCode}");
@@ -116,13 +124,32 @@ class ChildWidget2 extends ConsumerStatefulWidget {
 }
 
 class _ChildWidget2State extends ConsumerState<ChildWidget2> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var subs = ref.listenManual(
+      stateprovider1,
+          (previous, next) {
+        print("listenManual ${previous?.counter}  ${next?.counter} ");
+      },
+      onError: (error, stackTrace) {
+        print("onError ${error}    ");
+      },
+    );
+
+    Timer(Duration(seconds: 3), () {
+    subs.close();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     var p1 = ref.watch(stateprovider1);
     print("ChildWidget2 build ${p1.hashCode}");
     return GestureDetector(
       onTap: () {
-        ref.read(stateprovider1.notifier).state.counter++;
+        ref.read(stateprovider1.notifier).update((state) => AppState.count(++p1.counter)) ;
       },
       child: Text(
         'StateProvider ConsumerStatefulWidget  \n${ref.read(stateprovider1).counter} \n',

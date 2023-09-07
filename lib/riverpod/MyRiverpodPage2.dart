@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +21,14 @@ class _MyRiverpodPage2State extends ConsumerState<MyRiverpodPage2> {
     //  ref.invalidate(clockProvider);
     // TODO: implement dispose
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
   }
 
   @override
@@ -75,7 +85,7 @@ class _MyRiverpodPage2State extends ConsumerState<MyRiverpodPage2> {
                 final timeFormatted = DateFormat.Hms().format(currentTime);
                 return GestureDetector(
                   onTap: () {
-                  //  ref.read(clockProvider.notifier).changeTime();
+                    //  ref.read(clockProvider.notifier).changeTime();
                     ref.read(clockProvider.notifier).stream.listen((event) {
                       print("MyProviderPage2 stream $event ");
                     });
@@ -93,9 +103,14 @@ class _MyRiverpodPage2State extends ConsumerState<MyRiverpodPage2> {
                 AsyncValue<AppState> futureAsync = ref.watch(futureProvider);
                 print("FutureProvider Consumer $futureAsync ");
                 return futureAsync.when(
-                    data: (weather) => Text(
-                          'FutureProvider Consumer ${weather.counter}',
-                          style: Theme.of(context).textTheme.headlineMedium,
+                    data: (weather) => GestureDetector(
+                          onTap: () {
+                            // ref.read(futureProvider).requireValue=AppState.count(300);
+                          },
+                          child: Text(
+                            'FutureProvider Consumer ${weather.counter}',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
                         ),
                     error: (err, stack) => Text('Error: $err'),
                     loading: () => CircularProgressIndicator());

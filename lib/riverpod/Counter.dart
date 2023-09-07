@@ -31,5 +31,6 @@ class Counter2 extends StateNotifier<AppState> {
 
   void increment() {
     state=AppState.count(++state.counter);
+    
   }
 }
