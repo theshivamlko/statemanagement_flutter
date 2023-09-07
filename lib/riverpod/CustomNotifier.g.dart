@@ -6,7 +6,7 @@ part of 'CustomNotifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$customNotifierHash() => r'0e6a8fbafc2decdcbb59af2000a6e59258305a57';
+String _$customNotifierHash() => r'54cf1f60883fda6406a6cc03733ac8a7ee5772fb';
 
 /// See also [CustomNotifier].
 @ProviderFor(CustomNotifier)
