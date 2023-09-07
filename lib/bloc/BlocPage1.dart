@@ -22,7 +22,7 @@ class BlocPage1 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Bloc Provider ${BlocProvider.of<CounterCubit>(context).state.counter} ',
+              'BlocProvider CounterCubit ${BlocProvider.of<CounterCubit>(context).state.counter} ',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(
@@ -39,7 +39,7 @@ class BlocPage1 extends StatelessWidget {
               return GestureDetector(
                 onTap: () {},
                 child: Text(
-                  'BlocBuilder ${BlocProvider.of<CounterCubit>(context).state.counter} ',
+                  'BlocBuilder CounterCubit ${BlocProvider.of<CounterCubit>(context).state.counter} ',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               );
@@ -58,7 +58,7 @@ class BlocPage1 extends StatelessWidget {
                     BlocProvider.of<CounterCubit>(context).increment();
                   },
                   child: Text(
-                    'BlocListener ${BlocProvider.of<CounterCubit>(context).state.counter} ',
+                    'BlocListener CounterCubit ${BlocProvider.of<CounterCubit>(context).state.counter} ',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 )),
@@ -75,27 +75,14 @@ class BlocPage1 extends StatelessWidget {
                   BlocProvider.of<CounterCubit>(context).increment();
                 },
                 child: Text(
-                  'BlocConsumer ${BlocProvider.of<CounterCubit>(context).state.counter} ',
+                  'BlocConsumer CounterCubit ${BlocProvider.of<CounterCubit>(context).state.counter} ',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               );
             }),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => MultiBlocProvider(
-                                providers: [
-                                  BlocProvider<CounterCubit>(
-                                    create: (context) => CounterCubit(),
-                                  ),
-                                  BlocProvider<CounterCubit2>(
-                                    create: (context) => CounterCubit2(),
-                                  ),
-                                ],
-                            child: BlocPage2(),
-                              )));
+                  Navigator.pushNamed(context, "/bloc2");
                 },
                 child: Text("BLOC Page 2")),
           ],
