@@ -15,8 +15,6 @@ import 'GlobalCounterCubit.dart';
 class BlocWidgetApp extends StatelessWidget {
   BlocWidgetApp({super.key});
 
-  CounterCubit counterCubit = CounterCubit();
-  CounterCubit2 counterCubit2 = CounterCubit2();
   AppRouters appRouters = AppRouters();
 
   // This widget is the root of your application.

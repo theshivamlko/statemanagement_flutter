@@ -22,7 +22,7 @@ class AppRouters {
             builder: (_) => MultiBlocProvider(
                   providers: [
                     BlocProvider.value(value: counterCubit),
-                    BlocProvider.value(value: counterCubit2),
+                    BlocProvider.value(value: CounterCubit2()),
                   ],
                   child: BlocPage2(),
                 ));

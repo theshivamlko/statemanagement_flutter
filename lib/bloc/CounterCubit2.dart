@@ -8,7 +8,8 @@ class CounterCubit2 extends Cubit<AppState> {
     emit(AppState.count(state.counter + 1));
    }
   void increment2() {
-    emit(AppState.count(state.counter2 + 1));
+    print("increment2 ${state.counter2 + 1}");
+    emit(state.copy2(counter2: state.counter2 + 1));
    }
 
   @override

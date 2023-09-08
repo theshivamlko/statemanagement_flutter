@@ -52,6 +52,7 @@ class ChildWidget extends StatelessWidget {
     print("BlocPage2 ChildWidget build  ");
 
     var bloc = context.watch<CounterCubit>();
+    var bloc2 = context.watch<CounterCubit2>();
 
     return Column(
       children: [
@@ -63,7 +64,7 @@ class ChildWidget extends StatelessWidget {
                 context.read<CounterCubit2>().increment();
               },
               child: Text(
-                'BLOC1 State ${bloc?.state.counter} ${bloc2?.state.counter}',
+                'BLOC1 State C1 ${bloc?.state.counter}  C2 ${bloc2?.state.counter2}',
                 style: TextStyle(fontSize: 20),
               ));
         }),
@@ -75,10 +76,26 @@ class ChildWidget extends StatelessWidget {
                 context.read<CounterCubit2>().increment2();
               },
               child: Text(
-                'BLOC1 SELECT  ${num}',
+                'BLOC1 C2  ${context.read<CounterCubit2>().state.counter2}',
                 style: TextStyle(fontSize: 20),
               ));
-        })
+        }),
+        BlocSelector<CounterCubit2, AppState, bool>(
+          selector: (AppState state) {
+            return state.counter2 % 5 == 0;
+          },
+          builder: (context, state) {
+              return   GestureDetector(
+                onTap: () {
+                  context.read<CounterCubit2>().increment2();
+                  print( context.read<CounterCubit2>().state.counter2);
+                },
+                child:  !state?CircularProgressIndicator():Text(
+                  'BLOC2 BlocSelector  ${context.read<CounterCubit2>().state.counter2}',
+                  style: TextStyle(fontSize: 20),
+                ));
+          },
+        ),
       ],
     );
   }
