@@ -12,6 +12,5 @@ class ClassB {
   ClassE classE;
 
   ClassB(this.classC, this.classD, this.classE) {
-    print("constructor CLASS B $classBCounter");
-  }
+   }
 }

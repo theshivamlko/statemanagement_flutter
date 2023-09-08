@@ -5,6 +5,5 @@ class ClassD {
   ClassE classE;
 
   ClassD(this.classE) {
-    print("constructor CLASS D $classDCounter");
-  }
+   }
 }

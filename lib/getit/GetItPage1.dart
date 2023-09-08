@@ -11,6 +11,7 @@ import 'package:statemanagement/getit/ClassE.dart';
 import 'package:statemanagement/getit/ClassF.dart';
 import 'package:statemanagement/getit/ClassG.dart';
 
+final getIt = GetIt.instance;
 
 class GetItPage1 extends StatefulWidget {
   @override
@@ -18,7 +19,6 @@ class GetItPage1 extends StatefulWidget {
 }
 
 class _GetItPage1State extends State<GetItPage1> {
-  final getIt = GetIt.instance;
   ClassA? classA;
 
   ClassB? classB;
@@ -35,14 +35,14 @@ class _GetItPage1State extends State<GetItPage1> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   /* classA = getIt.get<ClassA>();
+    print("getIt2 ${getIt.hashCode}");
+    classA = getIt.get<ClassA>();
     classB = getIt.get<ClassB>();
-    classC = getIt.get<AbstractClassC>();
+    classC = getIt.get<ClassC>();
     classD = getIt.get<ClassD>();
     classF = getIt.get<ClassF>();
-    classG = getIt.get<ClassG>();*/
+    classG = getIt.get<ClassG>();
     classE = getIt.get<ClassE>();
-
   }
 
   @override
@@ -57,7 +57,7 @@ class _GetItPage1State extends State<GetItPage1> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-        /*  GestureDetector(
+          GestureDetector(
             onTap: () {
               print("Class A ${classA.hashCode}${classA?.classACounter++}");
               setState(() {});
@@ -73,11 +73,11 @@ class _GetItPage1State extends State<GetItPage1> {
               setState(() {});
             },
             child: Text(
-              'Class B ${classB?.classBCounter}',
+              'Class B Singleton ${classB?.classBCounter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-          ),*/
-         /* GestureDetector(
+          ),
+          GestureDetector(
             onTap: () {
               print("Class C ${classC.hashCode} ${classC?.classCCounter++}");
               setState(() {});
@@ -86,8 +86,8 @@ class _GetItPage1State extends State<GetItPage1> {
               'Class C ${classC?.classCCounter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-          ),*/
-         /* GestureDetector(
+          ),
+          GestureDetector(
             onTap: () {
               print("Class D ${classD.hashCode} ${classD?.classDCounter++}");
               setState(() {});
@@ -96,7 +96,7 @@ class _GetItPage1State extends State<GetItPage1> {
               'Class D ${classD?.classDCounter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-          ),*/
+          ),
           GestureDetector(
             onTap: () {
               print("Class E ${classE.hashCode} ${classE?.classECounter++}");
@@ -107,7 +107,7 @@ class _GetItPage1State extends State<GetItPage1> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-         /* GestureDetector(
+          GestureDetector(
             onTap: () {
               print("Class F ${classF.hashCode} ${classF?.classFCounter++}");
               setState(() {});
@@ -126,7 +126,7 @@ class _GetItPage1State extends State<GetItPage1> {
               'Class G ${classG?.classGCounter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-          ),*/
+          ),
           ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, "/bloc2");

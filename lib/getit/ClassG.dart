@@ -8,6 +8,5 @@ class ClassG {
   ClassF classF;
 
   ClassG(this.classF) {
-    print("constructor CLASS G $classGCounter");
-  }
+   }
 }

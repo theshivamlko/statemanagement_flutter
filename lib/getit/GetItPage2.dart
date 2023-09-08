@@ -41,7 +41,7 @@ class _GetItPage2State extends State<GetItPage2> {
 
     classA = getIt.get<ClassA>();
     classB = getIt.get<ClassB>();
-    classC = getIt.get<ClassC>();
+    // classC = getIt.get<ClassC>();
     classD = getIt.get<ClassD>();
     classE = getIt.get<ClassE>();
     classF = getIt.get<ClassF>();
@@ -80,7 +80,7 @@ class _GetItPage2State extends State<GetItPage2> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-          GestureDetector(
+         /* GestureDetector(
             onTap: () {
               print("Class C ${classC.hashCode} ${classC?.classCCounter++}");
               setState(() {});
@@ -89,7 +89,7 @@ class _GetItPage2State extends State<GetItPage2> {
               'Class C ${classC?.classCCounter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-          ),
+          ),*/
           GestureDetector(
             onTap: () {
               print("Class D ${classD.hashCode} ${classD?.classDCounter++}");

@@ -14,7 +14,7 @@ class ClassC implements AbstractClassC {
 
   @override
   String getData() {
-    print("constructor CLASS C getData $classCCounter");
+    print("CLASS C getData $classCCounter");
     return classCCounter.toString();
   }
 }
