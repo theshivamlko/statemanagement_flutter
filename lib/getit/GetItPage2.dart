@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
 import 'package:statemanagement/getit/ClassA.dart';
 import 'package:statemanagement/getit/ClassB.dart';
@@ -8,6 +9,8 @@ import 'package:statemanagement/getit/ClassC.dart';
 import 'package:statemanagement/getit/ClassD.dart';
 import 'package:statemanagement/getit/ClassE.dart';
 
+import '../AppState.dart';
+import 'AbstractClassC.dart';
 import 'ClassF.dart';
 import 'ClassG.dart';
 
@@ -25,27 +28,33 @@ class _GetItPage2State extends State<GetItPage2> {
 
   ClassB? classB;
 
-  ClassC? classC;
+  AbstractClassC? classC;
 
   ClassD? classD;
 
   ClassE? classE;
   ClassF? classF;
   ClassG? classG;
-
+  AppState? appState;
+  AppState? appState2;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    print("getIt2 ${getIt.hashCode}");
     classA = getIt.get<ClassA>();
     classB = getIt.get<ClassB>();
-    // classC = getIt.get<ClassC>();
+    classC = getIt.get<AbstractClassC>();
     classD = getIt.get<ClassD>();
     classE = getIt.get<ClassE>();
     classF = getIt.get<ClassF>();
     classG = getIt.get<ClassG>();
+    appState2 = getIt.get<AppState>(instanceName: 'AppState',param1: 100);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+      appState = await getIt.getAsync<AppState>();
+      setState(() {});
+    });
   }
 
   @override
@@ -76,11 +85,11 @@ class _GetItPage2State extends State<GetItPage2> {
               setState(() {});
             },
             child: Text(
-              'Class B ${classB?.classBCounter}',
+              'Class B Singleton ${classB?.classBCounter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-         /* GestureDetector(
+          /* GestureDetector(
             onTap: () {
               print("Class C ${classC.hashCode} ${classC?.classCCounter++}");
               setState(() {});
@@ -127,6 +136,26 @@ class _GetItPage2State extends State<GetItPage2> {
             },
             child: Text(
               'Class G ${classG?.classGCounter}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              print("appState Name ${appState2.hashCode} ${appState2?.counter++}");
+              setState(() {});
+            },
+            child: Text(
+              'appState ${appState2?.counter}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              print("appState Singleton ${appState?.counter++}");
+              setState(() {});
+            },
+            child: Text(
+              'appState Singleton ${appState?.counter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),

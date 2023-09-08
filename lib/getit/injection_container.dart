@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/bloc/CounterCubit.dart';
 import 'package:statemanagement/getit/AbstractClassC.dart';
 import 'package:statemanagement/getit/ClassB.dart';
@@ -17,41 +19,32 @@ Future init() async {
 }
 
 Future initFeature() async {
-
   // Register all here to be used later weather singleton or new instances
   try {
     GetIt getIt = GetIt.instance;
     print("getIt1 ${getIt.hashCode}");
+
+    // registerFactory
     getIt.registerFactory<ClassE>(() => ClassE());
 
-    print(
-        "ClassE ${getIt<ClassE>()} ${getIt<ClassE>().hashCode} ${getIt<ClassE>().hashCode}");
-
+    // registerFactory async function
     getIt.registerFactoryAsync<ClassF>(() => getIt<ClassE>().getClassF());
     ClassF classF = await getIt.getAsync<ClassF>();
     getIt.unregister<ClassF>();
+
     getIt.registerFactory<ClassF>(() => classF);
 
-    print(
-        "ClassF ${getIt<ClassF>()} ${getIt<ClassF>().hashCode} ${getIt<ClassF>().hashCode}");
-
     getIt.registerFactory(() => ClassG(classF));
-    print(
-        "ClassG ${getIt<ClassG>()} ${getIt<ClassG>().hashCode} ${getIt<ClassG>().hashCode}");
 
     getIt.registerFactory(() => ClassD(getIt<ClassE>()));
-    print(
-        "ClassD ${getIt<ClassD>()} ${getIt<ClassD>().hashCode} ${getIt<ClassD>().hashCode}");
 
+    // Abstract class
     getIt.registerFactory<AbstractClassC>(
         () => ClassC(getIt<ClassD>(), getIt<ClassE>()));
-    print(
-        "AbstractClassF ${getIt<AbstractClassC>()} ${getIt<AbstractClassC>()} ${getIt<AbstractClassC>().hashCode} ${getIt<AbstractClassC>().hashCode}");
 
+    // registerSingleton
     getIt.registerSingleton<ClassB>(
         ClassB(getIt<AbstractClassC>(), getIt<ClassD>(), getIt<ClassE>()));
-    print(
-        "ClassB ${getIt<ClassB>()} ${getIt<ClassB>().hashCode} ${getIt<ClassB>().hashCode}");
 
     // BLOC
     getIt.registerFactory<ClassA>(() => ClassA(
@@ -60,25 +53,21 @@ Future initFeature() async {
           getIt<ClassD>(),
           getIt<ClassE>(),
         ));
-    getIt<ClassA>().classACounter++;
-    print(
-        "ClassA ${getIt<ClassA>().classACounter} ${getIt<ClassA>().hashCode} ${getIt<ClassA>().hashCode}");
-    getIt<ClassA>().classACounter++;
-    print(
-        "ClassA ${getIt<ClassA>().classACounter} ${getIt<ClassA>().hashCode} ${getIt<ClassA>().hashCode}");
-    getIt<ClassA>().classACounter++;
-    print(
-        "ClassA ${getIt<ClassA>().classACounter} ${getIt<ClassA>().hashCode} ${getIt<ClassA>().hashCode}");
-    getIt<ClassA>().classACounter++;
-    print(
-        "ClassA1 ${getIt<ClassA>().classACounter} ${getIt<ClassA>().hashCode} ${getIt.get<ClassA>().hashCode}");
- print(
-        "ClassA2 ${getIt<ClassA>().classACounter} ${getIt<ClassA>().hashCode} ${getIt.get<ClassA>().hashCode}");
 
-    // Abstract
+    // registerFactoryParam with Name
+    getIt.registerFactoryParam<AppState, int, void>((param1, _) {
+      return AppState.count(param1);
+    }, instanceName: 'AppState');
 
-    // Use abstract implementation here
+    // registerSingletonAsync
+    getIt.registerSingletonAsync<SharedPreferences>(
+        () => SharedPreferences.getInstance());
 
+    // Only async singleton dependsOn allowed
+    getIt.registerSingletonWithDependencies<AppState>(
+      () => AppState.count(300),
+      dependsOn: [SharedPreferences],
+    );
     print("ClassF 2");
   } catch (e) {
     print("initFeature1 $e");

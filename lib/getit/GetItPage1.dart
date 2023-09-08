@@ -1,7 +1,9 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
+import 'package:statemanagement/AppState.dart';
 import 'package:statemanagement/getit/AbstractClassC.dart';
 import 'package:statemanagement/getit/ClassA.dart';
 import 'package:statemanagement/getit/ClassB.dart';
@@ -30,6 +32,8 @@ class _GetItPage1State extends State<GetItPage1> {
   ClassE? classE;
   ClassF? classF;
   ClassG? classG;
+  AppState? appState;
+  AppState? appState2;
 
   @override
   void initState() {
@@ -38,11 +42,16 @@ class _GetItPage1State extends State<GetItPage1> {
     print("getIt2 ${getIt.hashCode}");
     classA = getIt.get<ClassA>();
     classB = getIt.get<ClassB>();
-    classC = getIt.get<ClassC>();
+    classC = getIt.get<AbstractClassC>();
     classD = getIt.get<ClassD>();
+    classE = getIt.get<ClassE>();
     classF = getIt.get<ClassF>();
     classG = getIt.get<ClassG>();
-    classE = getIt.get<ClassE>();
+    appState2 = getIt.get<AppState>(instanceName: 'AppState',param1: 100);
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+      appState = await getIt.getAsync<AppState>();
+      setState(() {});
+    });
   }
 
   @override
@@ -77,7 +86,7 @@ class _GetItPage1State extends State<GetItPage1> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-          GestureDetector(
+          /* GestureDetector(
             onTap: () {
               print("Class C ${classC.hashCode} ${classC?.classCCounter++}");
               setState(() {});
@@ -86,7 +95,7 @@ class _GetItPage1State extends State<GetItPage1> {
               'Class C ${classC?.classCCounter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-          ),
+          ),*/
           GestureDetector(
             onTap: () {
               print("Class D ${classD.hashCode} ${classD?.classDCounter++}");
@@ -124,6 +133,26 @@ class _GetItPage1State extends State<GetItPage1> {
             },
             child: Text(
               'Class G ${classG?.classGCounter}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              print("appState Name ${appState2.hashCode} ${appState2?.counter++}");
+              setState(() {});
+            },
+            child: Text(
+              'appState ${appState2?.counter}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              print("appState Singleton ${appState?.counter++}");
+              setState(() {});
+            },
+            child: Text(
+              'appState Singleton ${appState?.counter}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
