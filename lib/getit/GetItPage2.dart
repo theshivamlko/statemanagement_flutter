@@ -9,12 +9,12 @@ import 'package:statemanagement/getit/ClassD.dart';
 import 'package:statemanagement/getit/ClassE.dart';
 
 
-class GetItPage1 extends StatefulWidget {
+class GetItPage2 extends StatefulWidget {
   @override
-  State<GetItPage1> createState() => _GetItPage1State();
+  State<GetItPage2> createState() => _GetItPage2State();
 }
 
-class _GetItPage1State extends State<GetItPage1> {
+class _GetItPage2State extends State<GetItPage2> {
   ClassA? classA;
 
   ClassB? classB;
@@ -39,7 +39,7 @@ class _GetItPage1State extends State<GetItPage1> {
 
   @override
   Widget build(BuildContext context) {
-    print("GetItPage1 build ");
+    print("GetItPage2 build ");
 
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +104,7 @@ class _GetItPage1State extends State<GetItPage1> {
                 onPressed: () {
                   Navigator.pushNamed(context, "/bloc2");
                 },
-                child: Text("GetItPage2")),
+                child: Text("BLOC Page 2")),
           ],
         ),
       ),

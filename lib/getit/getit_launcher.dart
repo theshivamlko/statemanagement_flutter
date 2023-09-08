@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:statemanagement/providers/MyBlocNotifier.dart';
-import 'package:statemanagement/providers/MyBlocNotifier2.dart';
-import 'package:statemanagement/providers/MyProviderPage1.dart';
+import 'AppRouters.dart';
+import 'injection_container.dart';
 
 class GetItWidgetApp extends StatelessWidget {
   const GetItWidgetApp({super.key});
 
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<MyBlocNotifier>(
-        create: (ctx) => MyBlocNotifier(),
-        builder: (context, child) {
-          return MaterialApp(
-            title: 'GetIt',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-            ),
-            home: Provider<MyBlocNotifier2>(
-                create: (ctx) => MyBlocNotifier2(),
-                builder: (context, child) {
-                  return MyProviderPage1();
-                }),
-          );
-        });
+    print("GetItWidgetApp build ");
+
+
+
+    return MaterialApp(
+      title: 'GetIt',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      onGenerateRoute: (routeSettings) =>
+          AppRouters().onGenerateRoute(routeSettings),
+    );
   }
 }
