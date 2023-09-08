@@ -9,7 +9,8 @@ class ClassE {
   }
 
   Future<ClassF> getClassF() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 5));
+    print("getClassF ");
     return ClassF(this);
   }
 }

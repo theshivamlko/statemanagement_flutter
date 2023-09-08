@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'GetItPage1.dart';
+import 'GetItPage2.dart';
 
 
 class AppRouters {
@@ -14,7 +15,7 @@ class AppRouters {
 
       case "/bloc2":
         return MaterialPageRoute(
-            builder: (_) =>GetItPage1());
+            builder: (_) =>GetItPage2());
       default:
         return null;
     }

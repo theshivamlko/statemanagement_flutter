@@ -1,9 +1,9 @@
-import 'package:statemanagement/getit/AbstractClassF.dart';
+import 'package:statemanagement/getit/AbstractClassC.dart';
 import 'package:statemanagement/getit/ClassE.dart';
 
 import 'ClassD.dart';
 
-class ClassC implements AbstractClassF {
+class ClassC implements AbstractClassC {
   int classCCounter = 0;
   ClassD classD;
   ClassE classE;

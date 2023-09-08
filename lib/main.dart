@@ -19,7 +19,9 @@ void main() async {
       storageDirectory: await getApplicationDocumentsDirectory());
 
   Bloc.observer = MyBlocObserver();
-  init();
+  print("MAIN1");
+  await init();
+  print("MAIN2");
 
   // runApp(const InheritedWidgetApp());
   // Provider.debugCheckInvalidValueType = null;
